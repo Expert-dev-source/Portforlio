@@ -12,7 +12,18 @@ const fields: Array<{ key: keyof ReturnType<typeof blank>; label: string; area?:
   { key: "outcome", label: "Outcome", area: true, hint: "Describe what actually changed. Only include results or numbers you can substantiate." }, { key: "technologies", label: "Technologies", hint: "Separate items with commas" },
   { key: "demoUrl", label: "Live project URL (HTTPS)" }, { key: "repositoryUrl", label: "Repository URL (HTTPS)" },
 ];
-async function errorMessage(response: Response, fallback: string) { const body = await response.json().catch(() => ({})) as { error?: string }; return body.error || fallback; }
+const fieldLabels: Record<string, string> = {
+  title: "Project name", slug: "URL slug", category: "Type / category", summary: "Short introduction",
+  context: "Context / problem", contribution: "What you built", outcome: "Outcome", technologies: "Technologies",
+  demoUrl: "Live project URL", repositoryUrl: "Repository URL", sortOrder: "Display order",
+};
+async function errorMessage(response: Response, fallback: string) {
+  const body = await response.json().catch(() => ({})) as { error?: string; details?: Record<string, string[]> };
+  const details = body.details
+    ? Object.entries(body.details).flatMap(([field, messages]) => messages.map((message) => `${fieldLabels[field] ?? field}: ${message}`)).join(" ")
+    : "";
+  return [body.error || fallback, details].filter(Boolean).join(" ");
+}
 export function AdminStudio({ ownerName, signInError }: { ownerName: string; signInError?: boolean }) {
   const [projects, setProjects] = useState<Project[]>([]); const [selectedId, setSelectedId] = useState<string | null>(null);
   const [form, setForm] = useState(blank()); const [isNew, setIsNew] = useState(false); const [loading, setLoading] = useState(true);
@@ -20,14 +31,33 @@ export function AdminStudio({ ownerName, signInError }: { ownerName: string; sig
   const selected = useMemo(() => projects.find((project) => project.id === selectedId) ?? null, [projects, selectedId]);
   const loadProjects = async (keepId?: string) => {
     setLoading(true); setError("");
-    try { const response = await fetch("/api/admin/projects", { cache: "no-store" }); if (!response.ok) throw new Error(await errorMessage(response, "Could not load projects.")); const data = await response.json() as { projects: Project[] }; setProjects(data.projects); const nextId = keepId && data.projects.some((p) => p.id === keepId) ? keepId : data.projects[0]?.id ?? null; setSelectedId(nextId); const chosen = data.projects.find((p) => p.id === nextId); if (chosen) { const { id: _id, images: _images, ...rest } = chosen; setForm(rest); setIsNew(false); } else { setForm(blank()); setIsNew(false); } }
-    catch (error) { setError(error instanceof Error ? error.message : "Could not load projects."); }
-    finally { setLoading(false); }
+    try {
+      const response = await fetch("/api/admin/projects", { cache: "no-store" });
+      if (!response.ok) throw new Error(await errorMessage(response, "Could not load projects."));
+      const data = await response.json() as { projects: Project[] };
+      setProjects(data.projects);
+      const nextId = keepId && data.projects.some((project) => project.id === keepId) ? keepId : data.projects[0]?.id ?? null;
+      setSelectedId(nextId);
+      const chosen = data.projects.find((project) => project.id === nextId);
+      if (chosen) {
+        const { id: _id, images: _images, ...rest } = chosen;
+        setForm(rest);
+        setIsNew(false);
+      } else {
+        setForm(blank());
+        setIsNew(true);
+      }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Could not load projects.");
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => { void loadProjects(); }, []);
   const choose = (project: Project) => { setSelectedId(project.id); setIsNew(false); const { id: _id, images: _images, ...rest } = project; setForm(rest); setMessage(""); setError(""); };
   const update = (key: keyof ReturnType<typeof blank>, value: string | boolean | number | string[]) => setForm((current) => ({ ...current, [key]: value }));
   const save = async () => {
+    if (!isNew && !selectedId) { setError("Choose Add project before saving a new project."); return; }
     setSaving(true); setError(""); setMessage("");
     const payload = { ...form, technologies: Array.isArray(form.technologies) ? form.technologies : String(form.technologies).split(",").map((item) => item.trim()).filter(Boolean) };
     try {
