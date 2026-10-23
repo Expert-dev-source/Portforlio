@@ -9,6 +9,7 @@ export const dynamic = "force-dynamic";
 
 const UPWORK_URL = "https://www.upwork.com/freelancers/~01f955317f70a18da6?companyReference=1904459385905651640&mp_source=share";
 const TIKTOK_URL = "https://www.tiktok.com/@lordic_1?_r=1&_t=ZS-9AklD8YDRbi";
+const GAME_URL = "https://kaygoold.netlify.app/";
 
 export default async function HomePage() {
   const projects = await listProjects(false);
@@ -35,7 +36,7 @@ export default async function HomePage() {
           <div className="hero-copy">
             <div className="eyebrow">LORDIC · OBADASA KAYODE</div>
             <h1>Full-stack<br />developer.<br /><em>Product builder.</em></h1>
-            <p>I’m Obadasa Kayode, a full-stack developer and CEO of Lordic. Through Lordic, I build SaaS MVPs, web apps and applied-AI products.</p>
+            <p>I’m Obadasa Kayode, a full-stack developer and CEO of Lordic. Through Lordic, I build SaaS MVPs, web apps, applied-AI products and games.</p>
             <div className="hero-links">
               <a className="button" href="#work">{hasProjects ? "See selected work" : "What Lordic builds"} <span>↘</span></a>
               <a className="text-link" href="#about">Behind Lordic</a>
@@ -53,6 +54,7 @@ export default async function HomePage() {
                 <span>SaaS MVPs</span>
                 <span>Full-stack apps</span>
                 <span>Applied AI</span>
+                <a className="hero-game-link" href={GAME_URL} target="_blank" rel="noopener noreferrer">Game development · View game <span aria-hidden="true">↗</span></a>
               </div>
             </div>
             <div className="hero-index">Product thinking · engineering · integrations</div>
@@ -67,6 +69,7 @@ export default async function HomePage() {
             <span>Applied AI</span>
             <span>Full-stack engineering</span>
             <span>Product work</span>
+            <span>Game development</span>
           </div>
         </div>
 
