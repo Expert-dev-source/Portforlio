@@ -470,14 +470,3 @@
     border-right: 0;
   }
 }
-
-
-.stack-item dt { font-size: 11px; }
-.stack-item dd {
-  font-size: clamp(18px, 2vw, 24px);
-  line-height: 1.25;
-  letter-spacing: -.025em;
-  font-weight: 500;
-}
-.skills-list li { font-size: 15px; }
-.site-stack p { font-size: 15px; }
