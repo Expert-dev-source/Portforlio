@@ -295,3 +295,127 @@
   .testimonial-card blockquote { margin-bottom: 20px; }
   .testimonial-card figcaption { justify-content: flex-start; padding-top: 13px; text-align: left; border-top: 1px solid var(--line); }
 }
+
+
+.hero-specialties .hero-game-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 4px;
+}
+
+.hero-specialties .hero-game-link:hover {
+  color: var(--rust);
+  text-decoration-color: var(--rust);
+}
+
+
+.services-section {
+  border-bottom: 1px solid var(--line);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.service-card {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 18px;
+  padding: 24px 26px 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.service-card:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.service-card:nth-child(even) {
+  padding-left: 26px;
+}
+
+.service-index {
+  padding-top: 7px;
+  color: var(--rust);
+  font: 10px var(--mono);
+}
+
+.service-card h3 {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 2.4vw, 31px);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  font-weight: 500;
+}
+
+.service-card p {
+  max-width: 500px;
+  margin: 0;
+  color: #535750;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.service-link {
+  display: inline-block;
+  margin-top: 18px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  font: 10px var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.service-link:hover {
+  color: var(--rust);
+  border-color: var(--rust);
+}
+
+.services-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 24px;
+}
+
+.services-cta p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card,
+  .service-card:nth-child(even) {
+    padding: 22px 0 24px;
+  }
+  .service-card:nth-child(odd) { border-right: 0; }
+}
+
+@media (max-width: 520px) {
+  .service-card { grid-template-columns: 25px minmax(0, 1fr); gap: 12px; }
+  .services-cta { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    height: auto;
+    min-height: 76px;
+    gap: 14px;
+    padding-block: 10px;
+  }
+  .header-right {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  .site-header { min-height: 64px; }
+  .header-right { gap: 8px 10px; }
+}

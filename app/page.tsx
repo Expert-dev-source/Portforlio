@@ -1,5 +1,6 @@
 import { listProjects } from "@/lib/db";
 import { ProjectRail } from "@/components/public/ProjectRail";
+import { Services } from "@/components/public/Services";
 import { TechStack } from "@/components/public/TechStack";
 import { Testimonials } from "@/components/public/Testimonials";
 import { MyWidgetFlowScript } from "@/components/public/MyWidgetFlowScript";
@@ -9,6 +10,7 @@ export const dynamic = "force-dynamic";
 
 const UPWORK_URL = "https://www.upwork.com/freelancers/~01f955317f70a18da6?companyReference=1904459385905651640&mp_source=share";
 const TIKTOK_URL = "https://www.tiktok.com/@lordic_1?_r=1&_t=ZS-9AklD8YDRbi";
+const GAME_URL = "https://kaygoold.netlify.app/";
 
 export default async function HomePage() {
   const projects = await listProjects(false);
@@ -22,6 +24,7 @@ export default async function HomePage() {
         </a>
         <nav className="header-right" aria-label="Main navigation">
           <a className="nav-link" href="#work">{hasProjects ? "Work" : "Focus"}</a>
+          <a className="nav-link" href="#services">Services</a>
           <a className="nav-link" href="#testimonials">Reviews</a>
           <a className="nav-link" href="#stack">Stack</a>
           <a className="nav-link" href="#about">About Lordic</a>
@@ -35,7 +38,7 @@ export default async function HomePage() {
           <div className="hero-copy">
             <div className="eyebrow">LORDIC · OBADASA KAYODE</div>
             <h1>Full-stack<br />developer.<br /><em>Product builder.</em></h1>
-            <p>I’m Obadasa Kayode, a full-stack developer and CEO of Lordic. Through Lordic, I build SaaS MVPs, web apps and applied-AI products.</p>
+            <p>I’m Obadasa Kayode, a full-stack developer and CEO of Lordic. Through Lordic, I build SaaS MVPs, web apps, applied-AI products and games.</p>
             <div className="hero-links">
               <a className="button" href="#work">{hasProjects ? "See selected work" : "What Lordic builds"} <span>↘</span></a>
               <a className="text-link" href="#about">Behind Lordic</a>
@@ -53,6 +56,7 @@ export default async function HomePage() {
                 <span>SaaS MVPs</span>
                 <span>Full-stack apps</span>
                 <span>Applied AI</span>
+                <a className="hero-game-link" href={GAME_URL} target="_blank" rel="noopener noreferrer">Game development · View game <span aria-hidden="true">↗</span></a>
               </div>
             </div>
             <div className="hero-index">Product thinking · engineering · integrations</div>
@@ -67,6 +71,7 @@ export default async function HomePage() {
             <span>Applied AI</span>
             <span>Full-stack engineering</span>
             <span>Product work</span>
+            <span>Game development</span>
           </div>
         </div>
 
@@ -79,13 +84,15 @@ export default async function HomePage() {
           <ProjectRail projects={projects} />
         </section>
 
+        <Services gameUrl={GAME_URL} />
+
         <TechStack />
         <Testimonials />
 
         <section className="about-section" id="about">
           <div className="wrap">
             <div className="about-grid">
-              <div className="chapter">04 / Behind Lordic</div>
+              <div className="chapter">05 / Behind Lordic</div>
               <div className="about-copy">
                 <h2>Lordic is my work.<br /><em>I’m the builder.</em></h2>
                 <p>I’m Obadasa Kayode, a full-stack developer and CEO of Lordic. Lordic is where I bring product thinking and engineering together. I build SaaS MVPs, web applications and applied-AI features across the interface, application logic and data.</p>
@@ -97,11 +104,11 @@ export default async function HomePage() {
 
         <section className="wrap section contact" id="contact">
           <div>
-            <div className="chapter">05 / Contact Lordic</div>
+            <div className="chapter">06 / Contact Lordic</div>
             <h2>What are you<br /><span className="display-serif">building?</span></h2>
           </div>
           <div>
-            <p>For SaaS MVPs, full-stack builds or applied-AI products, start a conversation with Lordic.</p>
+            <p>For SaaS MVPs, full-stack builds, applied-AI products or game development, start a conversation with Lordic.</p>
             <a className="button" href="mailto:obadasakayode78@gmail.com">Email Lordic <span>↗</span></a>
             <a className="contact-email" href="mailto:obadasakayode78@gmail.com">obadasakayode78@gmail.com</a>
             <nav className="profile-links" aria-label="Lordic profiles">
