@@ -7,13 +7,13 @@ const skills = [
 ];
 
 const technologies = [
-  { category: "Frameworks", name: "Next.js 15 · React 19" },
-  { category: "Languages", name: "TypeScript · Python" },
-  { category: "Runtime", name: "Node.js" },
-  { category: "Backend & auth", name: "Firebase · Supabase Auth" },
-  { category: "Data & storage", name: "PostgreSQL · Supabase Storage" },
+  { category: "Frontend frameworks", name: "Next.js 15 · React 19" },
+  { category: "Application frameworks", name: "Laravel · FastAPI" },
+  { category: "Languages", name: "TypeScript · Python · PHP" },
+  { category: "Backend & runtime", name: "Node.js · Firebase · Supabase Auth" },
+  { category: "Databases & storage", name: "PostgreSQL · MySQL · Supabase Storage" },
   { category: "AI & APIs", name: "OpenAI · LLMs · API integrations" },
-  { category: "3D tools", name: "Three.js" },
+  { category: "Games & interactive", name: "Three.js" },
 ];
 
 export function TechStack() {
