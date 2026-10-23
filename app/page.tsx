@@ -1,6 +1,7 @@
 import { listProjects } from "@/lib/db";
 import { ProjectRail } from "@/components/public/ProjectRail";
 import { TechStack } from "@/components/public/TechStack";
+import { Testimonials } from "@/components/public/Testimonials";
 import { MyWidgetFlowScript } from "@/components/public/MyWidgetFlowScript";
 import Image from "next/image";
 
@@ -21,6 +22,7 @@ export default async function HomePage() {
         </a>
         <nav className="header-right" aria-label="Main navigation">
           <a className="nav-link" href="#work">{hasProjects ? "Work" : "Focus"}</a>
+          <a className="nav-link" href="#testimonials">Reviews</a>
           <a className="nav-link" href="#stack">Stack</a>
           <a className="nav-link" href="#about">About Lordic</a>
           <a className="nav-link" href="#contact">Contact ↗</a>
@@ -78,11 +80,12 @@ export default async function HomePage() {
         </section>
 
         <TechStack />
+        <Testimonials />
 
         <section className="about-section" id="about">
           <div className="wrap">
             <div className="about-grid">
-              <div className="chapter">03 / Behind Lordic</div>
+              <div className="chapter">04 / Behind Lordic</div>
               <div className="about-copy">
                 <h2>Lordic is my work.<br /><em>I’m the builder.</em></h2>
                 <p>I’m Obadasa Kayode, a full-stack developer and CEO of Lordic. Lordic is where I bring product thinking and engineering together. I build SaaS MVPs, web applications and applied-AI features across the interface, application logic and data.</p>
@@ -94,7 +97,7 @@ export default async function HomePage() {
 
         <section className="wrap section contact" id="contact">
           <div>
-            <div className="chapter">04 / Contact Lordic</div>
+            <div className="chapter">05 / Contact Lordic</div>
             <h2>What are you<br /><span className="display-serif">building?</span></h2>
           </div>
           <div>
