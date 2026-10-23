@@ -419,3 +419,54 @@
   .site-header { min-height: 64px; }
   .header-right { gap: 8px 10px; }
 }
+
+.stack-section-label {
+  margin: 0 0 10px;
+}
+
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.skills-list li {
+  padding: 12px 14px 12px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.skills-list li:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.skills-list li:nth-child(even) {
+  padding-left: 14px;
+}
+
+.site-stack-copy {
+  display: grid;
+  gap: 7px;
+}
+
+.site-stack-copy p strong {
+  display: inline-block;
+  min-width: 92px;
+  font: 10px var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 520px) {
+  .skills-list { grid-template-columns: 1fr; }
+  .skills-list li,
+  .skills-list li:nth-child(even) {
+    padding: 11px 0;
+    border-right: 0;
+  }
+}
