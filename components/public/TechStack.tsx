@@ -13,7 +13,7 @@ export function TechStack() {
   return (
     <section className="wrap stack-section" id="stack" aria-labelledby="stack-heading">
       <div className="stack-intro">
-        <div className="chapter">02 / Tools & framework</div>
+        <div className="chapter">03 / Tools & framework</div>
         <h2 id="stack-heading">Tools I use<br /><em>to build products.</em></h2>
         <p>Frameworks, languages and platforms I use through Lordic to build software, AI features and API integrations.</p>
       </div>

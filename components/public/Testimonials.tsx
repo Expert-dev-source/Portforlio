@@ -24,7 +24,7 @@ export function Testimonials() {
       aria-labelledby="testimonials-heading"
     >
       <div className="section-head">
-        <div className="chapter">03 / Client endorsements</div>
+        <div className="chapter">04 / Client endorsements</div>
         <h2 className="section-title" id="testimonials-heading">
           Good work,<br /><span className="display-serif">in their words.</span>
         </h2>
