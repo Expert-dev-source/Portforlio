@@ -8,12 +8,11 @@ const skills = [
 
 const technologies = [
   { category: "Frameworks", name: "Next.js 15 · React 19" },
-  { category: "Languages", name: "TypeScript · Python" },
-  { category: "Runtime", name: "Node.js" },
-  { category: "Backend & auth", name: "Firebase · Supabase Auth" },
+  { category: "Languages", name: "TypeScript · Python · PHP" },
+  { category: "Backend & runtime", name: "Node.js · Firebase · Supabase Auth" },
   { category: "Data & storage", name: "PostgreSQL · Supabase Storage" },
   { category: "AI & APIs", name: "OpenAI · LLMs · API integrations" },
-  { category: "3D tools", name: "Three.js" },
+  { category: "3D & interactive", name: "Three.js" },
 ];
 
 export function TechStack() {
