@@ -1,31 +1,52 @@
-const tools = [
+const skills = [
+  "SaaS MVP and product development",
+  "Full-stack web application development",
+  "Applied AI and LLM integration",
+  "API integrations",
+  "Game development",
+];
+
+const technologies = [
   { category: "Frameworks", name: "Next.js 15 · React 19" },
   { category: "Languages", name: "TypeScript · Python" },
   { category: "Runtime", name: "Node.js" },
-  { category: "3D", name: "Three.js" },
-  { category: "Backend", name: "Firebase · Supabase Auth" },
+  { category: "Backend & auth", name: "Firebase · Supabase Auth" },
   { category: "Data & storage", name: "PostgreSQL · Supabase Storage" },
-  { category: "AI", name: "OpenAI · LLMs" },
-  { category: "Integrations", name: "API integrations" },
+  { category: "AI & APIs", name: "OpenAI · LLMs · API integrations" },
+  { category: "3D tools", name: "Three.js" },
 ];
 
 export function TechStack() {
   return (
     <section className="wrap stack-section" id="stack" aria-labelledby="stack-heading">
       <div className="stack-intro">
-        <div className="chapter">03 / Tools & framework</div>
-        <h2 id="stack-heading">Tools I use<br /><em>to build products.</em></h2>
-        <p>Frameworks, languages and platforms I use through Lordic to build software, AI features and API integrations.</p>
+        <div className="chapter">03 / Skills & Tech Stack</div>
+        <h2 id="stack-heading">Skills &amp; tech<br /><em>stack.</em></h2>
+        <p>Development areas I offer through Lordic, the technologies I work with, and the stack behind this portfolio.</p>
       </div>
       <div className="stack-content">
-        <dl className="stack-list" aria-label="Obadasa's professional tools and technologies">
-          {tools.map((item) => (
+        <div className="stack-section-label chapter">Skills</div>
+        <ul className="skills-list">
+          {skills.map((skill) => <li key={skill}>{skill}</li>)}
+        </ul>
+
+        <div className="stack-section-label chapter">Technologies</div>
+        <dl className="stack-list" aria-label="Obadasa's skills and professional technologies">
+          {technologies.map((item) => (
             <div className="stack-item" key={item.category}>
               <dt>{item.category}</dt>
               <dd>{item.name}</dd>
             </div>
           ))}
         </dl>
+
+        <div className="site-stack">
+          <div className="chapter">This site / implementation</div>
+          <div className="site-stack-copy">
+            <p><strong>Application</strong> Next.js 15 · React 19 · TypeScript · Supabase Auth · PostgreSQL · Supabase Storage</p>
+            <p><strong>Hosting</strong> Vercel</p>
+          </div>
+        </div>
       </div>
     </section>
   );
