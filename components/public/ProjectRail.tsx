@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Project } from "@/lib/db";
 
 export function ProjectRail({ projects }: { projects: Project[] }) {
+  const stage = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [current, setCurrent] = useState(1);
@@ -24,6 +25,66 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     el.scrollBy({ left: direction * (card.offsetWidth + 16), behavior: reduceMotion ? "auto" : "smooth" });
   };
+
+  useEffect(() => {
+    if (projects.length < 2) return;
+
+    let cancelled = false;
+    let revertMatchMedia: (() => void) | undefined;
+
+    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
+      .then(([gsapModule, scrollTriggerModule]) => {
+        if (cancelled) return;
+
+        const stageElement = stage.current;
+        const railElement = rail.current;
+        if (!stageElement || !railElement) return;
+
+        const { gsap } = gsapModule;
+        const { ScrollTrigger } = scrollTriggerModule;
+        gsap.registerPlugin(ScrollTrigger);
+
+        const media = gsap.matchMedia();
+        media.add(
+          "(min-width: 900px) and (min-height: 740px) and (prefers-reduced-motion: no-preference)",
+          () => {
+            const distance = Math.max(railElement.scrollWidth - railElement.clientWidth, 0);
+            if (distance < 1) return;
+
+            railElement.classList.add("project-rail--scroll-driven");
+            const animation = gsap.to(railElement, {
+              scrollLeft: () => Math.max(railElement.scrollWidth - railElement.clientWidth, 0),
+              ease: "none",
+              scrollTrigger: {
+                trigger: stageElement,
+                pin: stageElement,
+                start: "top top",
+                end: () => `+=${Math.max(railElement.scrollWidth - railElement.clientWidth, 0)}`,
+                scrub: 0.7,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              },
+            });
+
+            ScrollTrigger.refresh();
+            return () => {
+              railElement.classList.remove("project-rail--scroll-driven");
+              animation.scrollTrigger?.kill();
+              animation.kill();
+            };
+          },
+        );
+        revertMatchMedia = () => media.revert();
+      })
+      .catch(() => {
+        // The native horizontal rail remains usable if GSAP cannot load.
+      });
+
+    return () => {
+      cancelled = true;
+      revertMatchMedia?.();
+    };
+  }, [projects.length]);
 
   if (!projects.length) {
     return (
@@ -48,7 +109,7 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
   }
 
   return (
-    <>
+    <div className="project-rail-stage" ref={stage}>
       <div
         className="project-rail"
         role="region"
@@ -107,6 +168,6 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
           <button className="round-control" type="button" aria-label="Next project" onClick={() => move(1)}>→</button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
