@@ -1,3 +1,5 @@
+import { ScrollRevealGroup } from "@/components/public/ScrollRevealGroup";
+
 const services = [
   {
     title: "SaaS MVPs and product builds",
@@ -31,7 +33,7 @@ export function Services({ gameUrl }: { gameUrl: string }) {
         </h2>
         <p className="section-sub">What I take on, and what each build can include.</p>
       </div>
-      <div className="services-grid">
+      <ScrollRevealGroup className="services-grid" itemSelector=".service-card">
         {services.map((service, index) => (
           <article className="service-card" key={service.title}>
             <span className="service-index">0{index + 1}</span>
@@ -46,7 +48,7 @@ export function Services({ gameUrl }: { gameUrl: string }) {
             </div>
           </article>
         ))}
-      </div>
+      </ScrollRevealGroup>
       <div className="services-cta">
         <p>Have a project in mind?</p>
         <a className="button" href="mailto:obadasakayode78@gmail.com?subject=Project%20enquiry%20for%20Lordic">

@@ -1,3 +1,5 @@
+import { ScrollRevealGroup } from "@/components/public/ScrollRevealGroup";
+
 const skills = [
   "SaaS MVP and product development",
   "Full-stack web application development",
@@ -26,19 +28,23 @@ export function TechStack() {
       </div>
       <div className="stack-content">
         <div className="stack-section-label chapter">Skills</div>
-        <ul className="skills-list">
-          {skills.map((skill) => <li key={skill}>{skill}</li>)}
-        </ul>
+        <ScrollRevealGroup itemSelector="li">
+          <ul className="skills-list">
+            {skills.map((skill) => <li key={skill}>{skill}</li>)}
+          </ul>
+        </ScrollRevealGroup>
 
         <div className="stack-section-label chapter">Technologies</div>
-        <dl className="stack-list" aria-label="Obadasa's skills and professional technologies">
-          {technologies.map((item) => (
-            <div className="stack-item" key={item.category}>
-              <dt>{item.category}</dt>
-              <dd>{item.name}</dd>
-            </div>
-          ))}
-        </dl>
+        <ScrollRevealGroup itemSelector=".stack-item">
+          <dl className="stack-list" aria-label="Obadasa's skills and professional technologies">
+            {technologies.map((item) => (
+              <div className="stack-item" key={item.category}>
+                <dt>{item.category}</dt>
+                <dd>{item.name}</dd>
+              </div>
+            ))}
+          </dl>
+        </ScrollRevealGroup>
 
         <div className="site-stack">
           <div className="chapter">This site / implementation</div>
