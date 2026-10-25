@@ -517,3 +517,18 @@
     aspect-ratio: 16 / 10;
   }
 }
+
+
+/* Keep the homepage project preview window the same size regardless of summary length. */
+.project-visual {
+  flex: 0 0 auto;
+  min-height: 0;
+  aspect-ratio: 2.08 / 1;
+}
+
+@media (max-width: 640px) {
+  .project-visual {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+}
