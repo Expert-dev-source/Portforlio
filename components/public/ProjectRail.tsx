@@ -69,7 +69,7 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
             </div>
             <a className="project-visual" href={`/work/${encodeURIComponent(project.slug)}`} aria-label={`Read the ${project.title} case study`}>
               {project.images[0] ? (
-                <img src={project.images[0].url} alt={project.images[0].caption || `${project.title} interface`} width={1200} height={800} loading="lazy" decoding="async" style={{ position: "absolute", inset: "16px", width: "calc(100% - 32px)", height: "calc(100% - 32px)", objectFit: "cover" }} />
+                <img src={project.images[0].url} alt={project.images[0].caption || `${project.title} interface`} width={1200} height={800} loading="lazy" decoding="async" style={{ position: "absolute", inset: "16px", width: "calc(100% - 32px)", height: "calc(100% - 32px)", objectFit: "contain" }} />
               ) : (
                 <div className="project-plate" aria-hidden="true">
                   <span className="plate-index">LORDIC / {String(index + 1).padStart(2, "0")}</span>

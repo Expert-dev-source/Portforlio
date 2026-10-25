@@ -470,3 +470,50 @@
     border-right: 0;
   }
 }
+
+
+/* Keep case-study screenshots in a shared frame and show each complete source image. */
+.gallery {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+
+.gallery-item {
+  min-width: 0;
+  margin: 0;
+}
+
+.gallery-frame {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 2.08 / 1;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+}
+
+.gallery-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+  border: 0;
+}
+
+.gallery-item figcaption {
+  padding-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gallery-frame {
+    aspect-ratio: 16 / 10;
+  }
+}
