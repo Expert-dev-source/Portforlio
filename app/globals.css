@@ -532,3 +532,12 @@
     aspect-ratio: 16 / 10;
   }
 }
+
+
+.project-rail-stage {
+  position: relative;
+}
+
+.project-rail.project-rail--scroll-driven {
+  scroll-snap-type: none;
+}
