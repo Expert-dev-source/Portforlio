@@ -44,7 +44,28 @@ export default async function WorkPage({ params }: PageProps) {
       {project.context && <section className="case-layout"><h2>Context</h2><p>{project.context}</p></section>}
       {project.contribution && <section className="case-layout"><h2>Contribution</h2><p>{project.contribution}</p></section>}
       {project.outcome && <section className="case-layout"><h2>Outcome</h2><p>{project.outcome}</p></section>}
-      {project.images.length > 0 && <section className="case-layout"><h2>Selected screens</h2><div className="gallery">{project.images.map((image, index) => <figure key={image.id} style={{ margin: 0 }}><img src={image.url} alt={image.caption || `${project.title} screenshot ${index + 1}`} width={1200} height={900} loading="lazy" decoding="async"/>{image.caption && <figcaption className="micro" style={{ paddingTop: 8 }}>{image.caption}</figcaption>}</figure>)}</div></section>}
+      {project.images.length > 0 && (
+        <section className="case-layout">
+          <h2>Selected screens</h2>
+          <div className="gallery">
+            {project.images.map((image, index) => (
+              <figure className="gallery-item" key={image.id}>
+                <div className="gallery-frame">
+                  <img
+                    src={image.url}
+                    alt={image.caption || `${project.title} screenshot ${index + 1}`}
+                    width={1200}
+                    height={900}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                {image.caption && <figcaption className="micro">{image.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
       <section className="wrap section contact"><div><div className="chapter">Continue the conversation</div><h2>Build the next<br/><span className="display-serif">useful thing.</span></h2></div><a className="button" href="mailto:obadasakayode78@gmail.com?subject=Project%20enquiry%20for%20Lordic">Contact Obadasa Kayode <span>↗</span></a></section>
     </main>
     <footer className="wrap site-footer"><a href="/">© Obadasa Kayode · Lordic</a><a href="/admin">Owner studio</a></footer>
