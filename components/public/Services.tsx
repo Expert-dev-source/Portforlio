@@ -9,24 +9,28 @@ const services = [
   },
   {
     title: "SaaS MVPs and product builds",
+    value: "Launch a usable first version, validate the idea and learn what to build next.",
     description: "Take a product idea from defined user journeys to a usable first release, with the essential interfaces and data behind it.",
     value: "Get a working product into users' hands and learn what to improve next.",
     deliverables: "Product scope · Core workflows · First release",
   },
   {
     title: "Full-stack web applications",
+    value: "Replace fragmented manual steps with one connected, usable system.",
     description: "Build tailored dashboards, portals and workflow tools with the frontend, backend and integrations working as one.",
     value: "Reduce manual steps and make important information easier to manage.",
     deliverables: "Dashboards · Databases · Integrations",
   },
   {
     title: "Applied AI and API integrations",
+    value: "Reduce repetitive work and connect information where teams need it.",
     description: "Connect useful AI or external APIs to real tasks inside an existing or new product.",
     value: "Make workflows more useful without adding needless complexity.",
     deliverables: "API connections · AI features · Product workflows",
   },
   {
     title: "Game development",
+    value: "Create memorable interactive experiences that people can explore and play.",
     description: "Build interactive game experiences with a focus on responsive controls and a consistent visual identity.",
     value: "Create an experience people can actually explore and interact with.",
     deliverables: "Gameplay · Interaction · Web experiences",
@@ -50,6 +54,7 @@ export function Services({ gameUrl }: { gameUrl: string }) {
             <div className="service-card-content">
               <h3>{service.title}</h3>
               <p>{service.description}</p>
+              <p className="service-value"><span>What this enables</span>{service.value}</p>
               <div className="service-deliverables">{service.deliverables}</div>
               <div className="service-result">
                 <span className="micro">The value</span>
