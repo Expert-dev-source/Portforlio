@@ -8,6 +8,7 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
   const rail = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [current, setCurrent] = useState(1);
+  const [isScrollDriven, setIsScrollDriven] = useState(false);
 
   const update = useCallback(() => {
     const el = rail.current;
@@ -16,7 +17,7 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
     setProgress(max ? (el.scrollLeft / max) * 100 : 0);
     const card = el.querySelector<HTMLElement>(".project-card");
     if (card) setCurrent(Math.min(projects.length, Math.max(1, Math.round(el.scrollLeft / (card.offsetWidth + 16)) + 1)));
-  }, [projects.length]);
+  }, [projects.length, update]);
 
   const move = (direction: number) => {
     const el = rail.current;
@@ -30,6 +31,7 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
     if (projects.length < 2) return;
 
     let cancelled = false;
+    let frame = 0;
     let revertMatchMedia: (() => void) | undefined;
 
     void Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
@@ -52,8 +54,13 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
             if (distance < 1) return;
 
             railElement.classList.add("project-rail--scroll-driven");
+            setIsScrollDriven(true);
             const animation = gsap.to(railElement, {
               scrollLeft: () => Math.max(railElement.scrollWidth - railElement.clientWidth, 0),
+              onUpdate: () => {
+                cancelAnimationFrame(frame);
+                frame = requestAnimationFrame(update);
+              },
               ease: "none",
               scrollTrigger: {
                 trigger: stageElement,
@@ -68,7 +75,9 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
 
             ScrollTrigger.refresh();
             return () => {
+              cancelAnimationFrame(frame);
               railElement.classList.remove("project-rail--scroll-driven");
+              setIsScrollDriven(false);
               animation.scrollTrigger?.kill();
               animation.kill();
             };
@@ -82,6 +91,7 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
 
     return () => {
       cancelled = true;
+      cancelAnimationFrame(frame);
       revertMatchMedia?.();
     };
   }, [projects.length]);
@@ -109,7 +119,7 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
   }
 
   return (
-    <div className="project-rail-stage" ref={stage}>
+    <div className={`project-rail-stage${isScrollDriven ? " project-rail-stage--active" : ""}`} ref={stage}>
       <div
         className="project-rail"
         role="region"
@@ -122,40 +132,51 @@ export function ProjectRail({ projects }: { projects: Project[] }) {
         tabIndex={0}
         aria-label="Projects. Use the left and right arrow keys to browse."
       >
-        {projects.map((project, index) => (
-          <article className="project-card" key={project.id}>
+        {projects.map((project, index) => {
+          const name = project.title.toLowerCase();
+          const theme = name.includes("widget") ? "widget" : name.includes("campus") ? "campus" : name.includes("phone") ? "phone" : "standard";
+          const value = theme === "widget" ? "Build better ways to capture customer enquiries." : theme === "campus" ? "Bring learning, practice and progress into one workspace." : theme === "phone" ? "Explore application-level interaction in the browser." : "From a complex idea to a working digital experience.";
+          return (
+          <article className={`project-card project-card--${theme}`} key={project.id}>
             <div className="project-card-top">
               <span className="micro">{String(index + 1).padStart(2, "0")} / {project.category}</span>
               <span className="micro">{project.published ? "Published" : ""}</span>
             </div>
-            <a className="project-visual" href={`/work/${encodeURIComponent(project.slug)}`} aria-label={`Read the ${project.title} case study`}>
+            <a className="project-visual project-visual--feature" href={`/work/${encodeURIComponent(project.slug)}`} aria-label={`Explore the ${project.title} case study`}>
+              <span className="project-visual-orbit" aria-hidden="true" />
+              <span className="project-visual-caption" aria-hidden="true">{theme === "widget" ? "ENGAGEMENT / SYSTEMS" : theme === "campus" ? "LEARNING / EXPERIENCE" : theme === "phone" ? "INTERACTION / INTERFACE" : "PRODUCT / EXPERIENCE"}</span>
               {project.images[0] ? (
-                <img src={project.images[0].url} alt={project.images[0].caption || `${project.title} interface`} width={1200} height={800} loading="lazy" decoding="async" style={{ position: "absolute", inset: "16px", width: "calc(100% - 32px)", height: "calc(100% - 32px)", objectFit: "contain" }} />
+                <span className="project-device">
+                  <span className="project-device-bar" aria-hidden="true"><i /><i /><i /><span>{project.title}</span></span>
+                  <img src={project.images[0].url} alt={project.images[0].caption || `${project.title} interface`} width={1200} height={800} loading="lazy" decoding="async" />
+                </span>
               ) : (
                 <div className="project-plate" aria-hidden="true">
                   <span className="plate-index">LORDIC / {String(index + 1).padStart(2, "0")}</span>
                   <div className="plate-copy">
                     <span>{project.category} / PROJECT RECORD</span>
                     <strong>{project.title}</strong>
-                    <span>{project.demoUrl ? new URL(project.demoUrl).host : "Case study"}</span>
+                    <span>Case study</span>
                   </div>
                   <span className="plate-mark">L/</span>
                 </div>
               )}
+              <span className="project-visual-seal" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
             </a>
             <div className="project-card-bottom">
               <div>
                 <span className="micro">{project.technologies.slice(0, 4).join(" · ") || "Lordic / Product work"}</span>
                 <h3>{project.title}</h3>
-                <p>{project.summary}</p>
+                <p className="project-value">{value}</p>
               </div>
               <a className="card-arrow" href={`/work/${encodeURIComponent(project.slug)}`} aria-label={`Open ${project.title} case study`}>↗</a>
             </div>
           </article>
-        ))}
+          );
+        })}
       </div>
       <div className="rail-foot">
-        <span className="micro">Scroll or use arrow keys</span>
+        <span className="micro">{isScrollDriven ? "Scroll down to explore the work" : "Swipe, scroll or use the arrow keys"}</span>
         <div className="progress-wrap">
           <span className="progress-count">{String(current).padStart(2, "0")}</span>
           <div className="progress-line" role="progressbar" aria-label="Project browsing progress" aria-valuemin={1} aria-valuemax={projects.length} aria-valuenow={current}>
